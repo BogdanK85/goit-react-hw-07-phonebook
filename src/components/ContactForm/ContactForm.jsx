@@ -1,7 +1,7 @@
 // import { validateForm } from 'helpers/validationForm';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/contactsOperations';
 import { selectContacts } from 'redux/selectors';
 import {
   ButtonAddContact,

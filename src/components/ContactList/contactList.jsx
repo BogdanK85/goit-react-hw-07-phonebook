@@ -1,23 +1,33 @@
 import Contact from 'components/Contact/Contact';
-import { useSelector } from 'react-redux';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllContacts } from 'redux/contactsOperations';
+import { selectFilteredContacts } from 'redux/selectors';
+// import { selectContacts, selectFilter, selectFilteredContacts } from 'redux/selectors';
 import { ContactContainer } from './ContactList.styled';
 
 const ContactList = () => {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
+  const filteredContacts = useSelector(selectFilteredContacts);
 
-  const filteredContacts = (filter, contacts) => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+  useEffect(() => {
+    dispatch(getAllContacts());
+  }, [dispatch]);
 
-  const showContacts = filteredContacts(filter, contacts);
+  // const contacts = useSelector(selectContacts);
+  // const filter = useSelector(selectFilter);
+
+  // const filteredContacts = (filter, contacts) => {
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  // };
+
+  // const showContacts = filteredContacts(filter, contacts);
 
   return (
     <ContactContainer>
-      {(showContacts ?? contacts).map(contact => (
+      {filteredContacts.map(contact => (
         <Contact key={contact.id} contact={contact} />
       ))}
     </ContactContainer>
